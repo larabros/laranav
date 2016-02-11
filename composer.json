@@ -1,0 +1,52 @@
+{
+    "name": "hassankhan/laranav",
+    "type": "library",
+    "description": "An easy-to-use, customisable menu and navigation package for Laravel",
+    "keywords": [
+        "hassankhan",
+        "laranav",
+        "laravel",
+        "menu"
+    ],
+    "homepage": "https://github.com/hassankhan/laranav",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hassan Khan",
+            "email": "contact@hassankhan.me",
+            "homepage": "http://hassankhan.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "~5.5|~7.0",
+        "illuminate/contracts": "~5.1.0",
+        "illuminate/support": "~5.1.0",
+        "anahkiasen/html-object": "~1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laranav\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laranav\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "sniff": "phpcs",
+        "fix": "phpcbf"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
