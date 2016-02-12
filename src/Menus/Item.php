@@ -60,15 +60,15 @@ class Item
         $title,
         $url = '#',
         $isActive = false,
-        $activeClass = '',
         Collection $children = null,
-        $childrenClass = ''
+        $activeClass = 'active',
+        $childrenClass = 'dropdown'
     ) {
         $this->title         = $title;
         $this->url           = $url;
         $this->isActive      = $isActive;
-        $this->activeClass   = $activeClass;
         $this->children      = $children;
+        $this->activeClass   = $activeClass;
         $this->childrenClass = $childrenClass;
     }
 

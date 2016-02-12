@@ -123,8 +123,8 @@ class Menu
                 $title,
                 $default,
                 $this->isUrlActive($default),
-                $this->config['active_class'],
                 $children,
+                $this->config['active_class'],
                 $this->config['children_class']
             );
         }
