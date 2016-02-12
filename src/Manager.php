@@ -2,6 +2,7 @@
 
 namespace Laranav;
 
+use Laranav\Menus\Menu;
 use Illuminate\Contracts\Foundation\Application;
 
 class Manager
@@ -67,7 +68,13 @@ class Manager
         $config = $this->getConfig($name);
         $items  = $this->getMenuItems($name);
 
-        return new Menu($name, $items, $config, $this->app['views']);
+        return new Menu(
+            $name,
+            $items,
+            $config,
+            $this->app['view'],
+            $this->app['router']->getCurrentRequest()
+        );
     }
 
     /**

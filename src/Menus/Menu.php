@@ -3,6 +3,7 @@
 namespace Laranav\Menus;
 
 use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\Factory;
 
 class Menu
@@ -22,6 +23,13 @@ class Menu
     protected $items;
 
     /**
+     * Any configuration options for the menu.
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
      * The `Factory` instance used to generate the views.
      *
      * @var Factory
@@ -29,11 +37,11 @@ class Menu
     protected $viewFactory;
 
     /**
-     * Any configuration options for the menu.
+     * The incoming `Request` object.
      *
-     * @var array
+     * @var Request
      */
-    protected $config;
+    protected $request;
 
     /**
      * Create a new `Menu` instance.
@@ -42,17 +50,21 @@ class Menu
      * @param array   $items
      * @param array   $config
      * @param Factory $viewFactory
+     * @param Request $request
      */
     public function __construct(
         $name = 'default',
         array $items,
         array $config,
-        Factory $viewFactory
+        Factory $viewFactory,
+        Request $request
     ) {
         $this->name        = $name;
-        $this->items       = $this->createItems($items);
         $this->config      = $config;
         $this->viewFactory = $viewFactory;
+        $this->request     = $request;
+
+        $this->items       = $this->createItems($items);
     }
 
     /**
@@ -73,7 +85,7 @@ class Menu
     public function toHtml()
     {
         return $this->viewFactory
-            ->make($this->config['views']['menu'], $this->items->roots())
+            ->make($this->config['views']['menu'], ['menuItems' => $this->items->all()])
             ->render();
     }
 
@@ -93,25 +105,40 @@ class Menu
             // The best way to be ;)
             $children = null;
             $childItems = [];
+            $default = $url;
 
             // If `$url` is an array, then the item has children - create a
             // sub-collection of `Items`.
             if (is_array($url)) {
 
-                // Shift the default value from first position
-                $default = array_shift($url);
+                // Get `default` item URL
+                $default = array_only($url, 'default')['default'];
 
                 // Create a `Collection` of the children items
-                $children = $this->createItems($url);
+                $children = $this->createItems(array_except($url, 'default'));
             }
 
             // Create a new `Item`
-            $itemCollection[] = new Item($title, $url, false, $children);
+            $itemCollection[] = new Item(
+                $title,
+                $default,
+                $this->isUrlActive($default),
+                $this->config['active_class'],
+                $children,
+                $this->config['children_class']
+            );
         }
 
         return new Collection($itemCollection);
     }
 
+    /**
+     * Checks if a provided URL is active or not.
+     *
+     * @param  string  $url
+     *
+     * @return boolean
+     */
     protected function isUrlActive($url)
     {
         return $this->request->is($url);

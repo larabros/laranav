@@ -7,7 +7,7 @@ return [
         'About'   => 'about',
         'Contact' => 'contact',
         'Nested'  => [
-            'default' => '',
+            'default' => '/',
             '1' => '1',
             '2' => '2',
         ]

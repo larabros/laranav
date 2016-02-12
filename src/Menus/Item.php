@@ -21,11 +21,32 @@ class Item
     protected $url;
 
     /**
+     * The active state of the item.
+     *
+     * @var bool
+     */
+    protected $isActive;
+
+    /**
+     * The CSS class used to highlight an active item.
+     *
+     * @var string
+     */
+    protected $activeClass;
+
+    /**
      * A `Collection` of `Item` instances for any child items.
      *
      * @var Collection|null
      */
     protected $children;
+
+    /**
+     * The CSS class used to highlight an item with children.
+     *
+     * @var string
+     */
+    protected $childrenClass;
 
     /**
      * Create a new `Item` instance.
@@ -35,11 +56,20 @@ class Item
      * @param boolean         $isActive
      * @param Collection|null $children
      */
-    public function __construct($title, $url = '#', $isActive = false, Collection $children = null)
-    {
-        $this->title    = $title;
-        $this->url      = $url;
-        $this->children = $children;
+    public function __construct(
+        $title,
+        $url = '#',
+        $isActive = false,
+        $activeClass = '',
+        Collection $children = null,
+        $childrenClass = ''
+    ) {
+        $this->title         = $title;
+        $this->url           = $url;
+        $this->isActive      = $isActive;
+        $this->activeClass   = $activeClass;
+        $this->children      = $children;
+        $this->childrenClass = $childrenClass;
     }
 
     /**
@@ -63,6 +93,16 @@ class Item
     }
 
     /**
+     * Returns the active status of the item.
+     *
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
      * Check if this item has any children.
      *
      * @return boolean
@@ -83,17 +123,24 @@ class Item
     }
 
     /**
-     * Returns any CSS classes that should be applied to this class, for
-     * example active links and nested menu items generally have different
-     * styling.
+     * Returns any CSS classes that should be applied to this item when, for
+     * example highlighting an active link, or displaying a menu item with children.
      *
      * @return string
      */
     public function getClasses()
     {
+        $classesString = '';
+
         // Check if this is the active item
         if ($this->isActive()) {
-            # code...
+            $classesString += $this->activeClass + ' ';
         }
+
+        if ($this->hasChildren()) {
+            $classesString += $this->childrenClass + ' ';
+        }
+
+        return trim($classesString);
     }
 }

@@ -25,13 +25,6 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     protected function tearDown() {}
 
     /**
-     * Test that true does in fact equal true
-     */
-    public function testTrueIsTrue() {
-        $this->assertTrue(true);
-    }
-
-    /**
      * @covers       Laranav\Menus\Item::__construct()
      * @covers       Laranav\Menus\Item::getTitle()
      * @dataProvider itemProvider()

@@ -2,14 +2,13 @@
 
 namespace Laranav;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class LaranavServiceProvider extends ServiceProvider
 {
     /**
-     * Perform post-registration booting of services.
-     *
-     * @return void
+     * @inheritDoc
      */
     public function boot(Request $request)
     {
@@ -21,15 +20,13 @@ class LaranavServiceProvider extends ServiceProvider
 
         // Views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laranav');
-        // $this->publishes([
-        //     __DIR__.'/../resources/views' => base_path('resources/views/vendor/laranav'),
-        // ], 'views');
+        $this->publishes([
+            __DIR__.'/../resources/views' => base_path('resources/views/vendor/laranav'),
+        ], 'views');
     }
 
     /**
-     * Register any package services.
-     *
-     * @return void
+     * @inheritDoc
      */
     public function register()
     {
@@ -39,5 +36,13 @@ class LaranavServiceProvider extends ServiceProvider
         $this->app->singleton('nav', function ($app) {
             return new Manager($app);
         });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function provides()
+    {
+        return ['nav'];
     }
 }
