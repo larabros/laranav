@@ -72,8 +72,9 @@ class Manager
             $name,
             $items,
             $config,
-            $this->app['view'],
-            $this->app['router']->getCurrentRequest()
+            $this->app['router']->getCurrentRequest(),
+            $this->app['url'],
+            $this->app['view']
         );
     }
 

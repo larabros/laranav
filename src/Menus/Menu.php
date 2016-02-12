@@ -4,6 +4,7 @@ namespace Laranav\Menus;
 
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 
 class Menu
@@ -30,18 +31,25 @@ class Menu
     protected $config;
 
     /**
-     * The `Factory` instance used to generate the views.
-     *
-     * @var Factory
-     */
-    protected $viewFactory;
-
-    /**
      * The incoming `Request` object.
      *
      * @var Request
      */
     protected $request;
+
+    /**
+     * An instance of `UrlGenerator` used to generate any URLs for the menu items.
+     *
+     * @var UrlGenerator
+     */
+    protected $generator;
+
+    /**
+     * The `Factory` instance used to generate the views.
+     *
+     * @var Factory
+     */
+    protected $viewFactory;
 
     /**
      * Create a new `Menu` instance.
@@ -54,17 +62,20 @@ class Menu
      */
     public function __construct(
         $name = 'default',
-        array $items,
+        array $items = [],
         array $config,
-        Factory $viewFactory,
-        Request $request
+        Request $request,
+        UrlGenerator $generator,
+        Factory $viewFactory
     ) {
         $this->name        = $name;
         $this->config      = $config;
-        $this->viewFactory = $viewFactory;
         $this->request     = $request;
+        $this->generator   = $generator;
+        $this->viewFactory = $viewFactory;
 
-        $this->items       = $this->createItems($items);
+        // Has to be done after other dependencies are set
+        $this->items       = new Collection($this->createItems($items));
     }
 
     /**
@@ -75,6 +86,17 @@ class Menu
     public function getName()
     {
         return $this->name;
+    }
+
+    public function addItems($items)
+    {
+        $this->items = $this->items->merge($this->createItems($items));
+    }
+
+    public function addItem($title, $item)
+    {
+        // Create a new `Item`
+        $this->items->push($this->createItem($title, $item));
     }
 
     /**
@@ -89,47 +111,73 @@ class Menu
             ->render();
     }
 
+    protected function createItems($items)
+    {
+        $itemCollection = [];
+        foreach ($items as $title => $item) {
+            $itemCollection[] = $this->createItem($title, $item);
+        }
+        return new Collection($itemCollection);
+    }
+
     /**
      * Creates `Item` objects from an (nested) array of `$items` and returns
      * a `Collection`.
      *
-     * @param  array $items
+     * @param  array $item
      *
-     * @return Collection
+     * @return Item
      */
-    protected function createItems($items)
+    protected function createItem($title, $item)
     {
-        $itemCollection = [];
-        foreach ($items as $title => $url) {
+        // The best way to be ;)
+        $children   = null;
+        $default    = $item;
 
-            // The best way to be ;)
-            $children = null;
-            $childItems = [];
-            $default = $url;
-
-            // If `$url` is an array, then the item has children - create a
-            // sub-collection of `Items`.
-            if (is_array($url)) {
-
-                // Get `default` item URL
-                $default = array_only($url, 'default')['default'];
-
-                // Create a `Collection` of the children items
-                $children = $this->createItems(array_except($url, 'default'));
-            }
-
-            // Create a new `Item`
-            $itemCollection[] = new Item(
-                $title,
-                $default,
-                $this->isUrlActive($default),
-                $children,
-                $this->config['active_class'],
-                $this->config['children_class']
-            );
+        // If `$item` is an array and that array has a `route` key, then
+        // attempt to generate a URL from the route name.
+        if ($this->isRouteItem($item)) {
+            $default = $this->getRouteItemUrl($item);
         }
 
-        return new Collection($itemCollection);
+        // If `$item` is an array and that array has a `default` key, then
+        // the item has children.
+        if ($this->isNestedItem($item)) {
+
+            // Get `default` item URL
+            $default = array_only($item, 'default')['default'];
+
+            if ($this->isRouteItem($default)) {
+                $default = $this->getRouteItemUrl($default);
+            }
+
+            // Create a `Collection` of the children items
+            $children = $this->createItems(array_except($item, 'default'));
+        }
+
+        return new Item(
+            $title,
+            $default,
+            $this->isUrlActive($default),
+            $children,
+            $this->config['active_class'],
+            $this->config['children_class']
+        );
+    }
+
+    protected function isRouteItem($item)
+    {
+        return is_array($item) && array_has($item, 'route');
+    }
+
+    protected function isNestedItem($item)
+    {
+        return is_array($item) && array_has($item, 'default');
+    }
+
+    protected function getRouteItemUrl(array $item)
+    {
+        return $this->generator->route($item['route']);
     }
 
     /**
@@ -141,6 +189,10 @@ class Menu
      */
     protected function isUrlActive($url)
     {
+        if(is_array($url)) {
+            // dd($url);
+        }
+        // var_dump($url);
         return $this->request->is($url);
     }
 }
