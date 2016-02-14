@@ -2,10 +2,10 @@
 
 namespace Laranav\Menus;
 
-use Illuminate\Support\Collection;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class Menu
 {
