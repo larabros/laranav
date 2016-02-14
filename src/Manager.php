@@ -3,17 +3,11 @@
 namespace Laranav;
 
 use Laranav\Menus\Menu;
+use Illuminate\Support\Manager as AbstractManager;
 use Illuminate\Contracts\Foundation\Application;
 
-class Manager
+class Manager extends AbstractManager
 {
-    /**
-     * The application instance.
-     *
-     * @var Application
-     */
-    protected $app;
-
     /**
      * The array of menus as defined in the config files.
      *
@@ -22,48 +16,38 @@ class Manager
     protected $menus;
 
     /**
-     * Create a new `Manager` instance.
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
-
-    /**
      * Get a `Menu` instance.
      *
      * @param  string $name
      *
      * @return Menu
      */
-    public function menu($name = 'default')
+    public function menu($name = null)
     {
-        return $this->menus[$name] = $this->get($name);
+        $name = $name ?: $this->getDefaultDriver();
+        return $this->menus[$name] = $this->driver($name);
     }
 
     /**
-     * Attempt to get the `Menu` instance from local cache, or resolve a new
-     * instance.
-     *
-     * @param  string $name
-     *
-     * @return Menu
+     * @inheritDoc
      */
-    protected function get($name)
+    public function getDefaultDriver()
     {
-        return isset($this->menus[$name]) ? $this->menus[$name] : $this->resolve($name);
+        return 'default';
     }
 
     /**
-     * Resolve a new instance of `Menu`.
-     *
-     * @param  string $name
-     *
-     * @return Menu
+     * @inheritDoc
      */
-    protected function resolve($name)
+    public function driver($name = null)
+    {
+        return isset($this->menus[$name]) ? $this->menus[$name] : $this->createDriver($name);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDriver($name)
     {
         $config = $this->getConfig($name);
         $items  = $this->getMenuItems($name);
@@ -72,9 +56,9 @@ class Manager
             $name,
             $items,
             $config,
-            $this->app['router']->getCurrentRequest(),
-            $this->app['url'],
-            $this->app['view']
+            $this->app->make('router')->getCurrentRequest(),
+            $this->app->make('url'),
+            $this->app->make('view')
         );
     }
 
@@ -87,7 +71,7 @@ class Manager
      */
     protected function getConfig($name)
     {
-        return $this->app['config']["laranav.config.{$name}"];
+        return $this->app->make('config')->get("laranav.config.{$name}");
     }
 
     /**
@@ -99,19 +83,6 @@ class Manager
      */
     protected function getMenuItems($name)
     {
-        return $this->app['config']["laranav.menus.{$name}"];
-    }
-
-    /**
-     * Dynamically call methods on the default `Menu` instance.
-     *
-     * @param  string  $method
-     * @param  array   $parameters
-     *
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        return call_user_func_array([$this->menu(), $method], $parameters);
+        return $this->app->make('config')->get("laranav.menus.{$name}");
     }
 }
