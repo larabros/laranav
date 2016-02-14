@@ -162,14 +162,14 @@ class Menu
 
         // If `$item` is an array, then attempt to generate a URL from the
         // provided parameters.
-        if ($this->isItemArray($item)) {
             $type = key($item);
             $default = $this->generator->$type($item[$type]);
+        if ($this->isItemArray($item) && !$this->hasNestedItems($item)) {
         }
 
         // If `$item` is an array and that array has a `default` key, then
         // the item has children.
-        if ($this->isNestedItem($item)) {
+        if ($this->hasNestedItems($item)) {
             // Get `default` item URL
             $default = array_only($item, 'default')['default'];
 
@@ -219,9 +219,9 @@ class Menu
      *
      * @return boolean
      */
-    protected function isNestedItem($item)
+    protected function hasNestedItems($item)
     {
-        return is_array($item) && array_has($item, 'default');
+        return is_array($item) && in_array('default', array_keys($item));
     }
 
     /**
