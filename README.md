@@ -55,7 +55,7 @@ First, open `config/laranav/config.php` and add a new menu `myMenu` like so:
 
 Any menus you create automatically inherit from `default`, and so you can easily override any options by specifying them in each menu's configuration. You can read more about available options [here](#configphp).
 
-Next, open `config/laranav/menus.php` and add items for `myMenu`:
+Next, open `config/laranav/menus.php` and add some items:
 ``` php
 'default' => [
     ...
@@ -78,12 +78,12 @@ Laranav publishes **two** files to your `config/laranav`: `config.php` and `menu
 
 Each key in this file is the name of a menu. Each menu can have the following options:
 
-| Options | Description |
-|---|---|
-| `active_class` | The CSS class to set on the active menu item |
-| `children_class` | The CSS class to set on a menu item with children |
-| `views.menu` | The blade template to use when rendering a menu |
-| `views.item` | The blade template to use when rendering an item |
+| Options | Description | Default |
+|---|---|---|
+| `active_class` | The CSS class to set on the active menu item | `active` |
+| `children_class` | The CSS class to set on a menu item with children | `dropdown` |
+| `views.menu` | The blade template to use when rendering a menu | `laranav::partials.menu` |
+| `views.item` | The blade template to use when rendering an item | `laranav::partials.item` |
 
 ### menus.php
 
