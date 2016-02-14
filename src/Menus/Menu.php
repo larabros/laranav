@@ -126,7 +126,7 @@ class Menu
     public function toHtml()
     {
         return $this->viewFactory
-            ->make($this->config['views']['menu'], ['menuItems' => $this->items->all()])
+            ->make($this->config['view'], ['menuItems' => $this->items->all()])
             ->render();
     }
 

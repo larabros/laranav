@@ -41,21 +41,13 @@ class ManagerTest extends TestCase
             ->andReturn([
                 'active_class'   => 'active',
                 'children_class' => 'dropdown',
-                'views' => [
-                    'menu' => 'laranav::partials.menu',
-                    'item' => 'laranav::partials.item',
-                ]
+                'view'           => 'laranav::partials.menu'
             ]);
 
         $config->shouldReceive('get')
             ->with('laranav.config.nav')
             ->zeroOrMoreTimes()
-            ->andReturn([
-                'views' => [
-                    'menu' => 'laranav::partials.nav',
-                    'item' => 'laranav::partials.nav-item',
-                ]
-            ]);
+            ->andReturn(['view' => 'laranav::partials.nav']);
 
         $config->shouldReceive('get')
             ->with('laranav.menus.default')

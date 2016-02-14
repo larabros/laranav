@@ -27,16 +27,13 @@ class MenuTest extends TestCase
     protected function setUp()
     {
         $this->config = [
-            'active_class' => 'active',
+            'active_class'   => 'active',
             'children_class' => 'dropdown',
-            'views' => [
-                'menu' => 'laranav::partials.menu',
-                'item' => 'laranav::partials.item',
-            ]
+            'view'           => 'laranav::partials.menu',
         ];
 
-        $this->requestMock = m::mock('Illuminate\Http\Request');
-        $this->generatorMock = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
+        $this->requestMock     = m::mock('Illuminate\Http\Request');
+        $this->generatorMock   = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
         $this->viewFactoryMock = m::mock('Illuminate\Contracts\View\Factory');
 
         $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
