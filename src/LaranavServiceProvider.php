@@ -10,7 +10,7 @@ class LaranavServiceProvider extends ServiceProvider
     /**
      * @inheritDoc
      */
-    public function boot(Request $request)
+    public function boot()
     {
         // Config files
         $this->publishes([

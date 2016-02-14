@@ -195,7 +195,7 @@ class Menu
     /**
      * Checks whether an item has a `route` key.
      *
-     * @param  array  $item
+     * @param  array|string  $item
      *
      * @return boolean
      */
@@ -207,7 +207,7 @@ class Menu
     /**
      * Checks whether an item has a `default` key.
      *
-     * @param  array  $item
+     * @param  array|string  $item
      *
      * @return boolean
      */
