@@ -10,6 +10,9 @@ use \Mockery as m;
 class MenuTest extends TestCase
 {
 
+    /**
+     * An example base application URL.
+     */
     const BASE_URL = 'http://localhost';
 
     /**
@@ -40,6 +43,8 @@ class MenuTest extends TestCase
             ->andReturn($this->requestMock);
         $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
             ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
+        $this->generatorMock->shouldReceive('to')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/');
     }
 
     /**
@@ -59,7 +64,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::createItems()
      * @covers       Laranav\Menus\Menu::createItem()
      * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::isNestedItem()
+     * @covers       Laranav\Menus\Menu::hasNestedItems()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
@@ -79,7 +84,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::addItem()
      * @covers       Laranav\Menus\Menu::createItem()
      * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::isNestedItem()
+     * @covers       Laranav\Menus\Menu::hasNestedItems()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
@@ -103,7 +108,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::createItems()
      * @covers       Laranav\Menus\Menu::createItem()
      * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::isNestedItem()
+     * @covers       Laranav\Menus\Menu::hasNestedItems()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::getItems()
      * @dataProvider nestedMenuProvider()
@@ -125,7 +130,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::addItems()
      * @covers       Laranav\Menus\Menu::createItems()
      * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::isNestedItem()
+     * @covers       Laranav\Menus\Menu::hasNestedItems()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::toHtml()
      * @covers       Laranav\Menus\Menu::getItems()

@@ -44,11 +44,31 @@ After registering the service provider, run `php artisan vendor:publish` to publ
 
 ## Usage
 
-First, open `config/laranav/config.php` and add any menus you would like to add. If you want to change any options from the defaults, then you can do that for individual menus.
+First, open `config/laranav/config.php` and add a new menu `myMenu` like so:
 
-After setting the options, open `config/laranav/menus.php` and add any items for the menus here.
+``` php
+'default' => [
+    ...
+],
+'myMenu' => []
+```
 
-Finally, in your template, add `{!! Nav::menu('default')->toHtml() !!}` and your menu should render!
+Any menus you create automatically inherit from `default`, and so you can easily override any options by specifying them in each menu's configuration. You can read more about available options [here](#configphp).
+
+Next, open `config/laranav/menus.php` and add items for `myMenu`:
+``` php
+'default' => [
+    ...
+],
+'myMenu' => [
+    'Home'    => '/',
+    'About'   => 'about',
+]
+```
+
+Items can link to a simple URL, or you can use Laravel's `UrlGenerator` object to generate URLs. You can read more about available options [here](#menusphp)
+
+Finally, in your template, add `{!! Nav::menu('myMenu')->toHtml() !!}` and your menu should render!
 
 ## Configuration
 
@@ -71,7 +91,7 @@ Just like before, each key in this file is the name of a menu.
 
 Items are defined like this:
 ``` php
-[
+'myMenu' => [
     'Home'    => '/',
     'About'   => 'about',
     'Contact' => 'contact',
@@ -88,7 +108,7 @@ You can use Laravel's routing to generate URLs for the menu items - the followin
 
 Items are then defined like this:
 ``` php
-[
+'myMenu' => [
     'Home'    => ['route' => 'home'],
     'About'   => ['action' => 'HomeController@about'],
     'Contact' => ['to' => 'contact'],
@@ -97,7 +117,7 @@ Items are then defined like this:
 
 If the item has child items, then add them like this:
 ``` php
-[
+'myMenu' => [
     'Nested'  => [
         'default' => '/',
         '1' => '1',
@@ -105,6 +125,8 @@ If the item has child items, then add them like this:
     ]
 ]
 ```
+
+> Items with children **require** a `default` key.
 
 ## Change log
 

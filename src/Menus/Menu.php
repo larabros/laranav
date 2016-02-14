@@ -158,25 +158,18 @@ class Menu
     {
         // The best way to be ;)
         $children = null;
-        $default  = $item;
+        $url      = $item;
 
         // If `$item` is an array, then attempt to generate a URL from the
         // provided parameters.
-        if ($this->isItemArray($item)) {
-            $type = key($item);
-            $default = $this->generator->$type($item[$type]);
+        if ($this->isItemArray($item) && !$this->hasNestedItems($item)) {
+            $url = $this->generateItemUrl($item);
         }
 
-        // If `$item` is an array and that array has a `default` key, then
-        // the item has children.
-        if ($this->isNestedItem($item)) {
+        // If `$item` is an array and has a `default` key, then it has children.
+        if ($this->hasNestedItems($item)) {
             // Get `default` item URL
-            $default = array_only($item, 'default')['default'];
-
-            if ($this->isItemArray($default)) {
-                $type = key($default);
-                $default = $this->generator->$type($default[$type]);
-            }
+            $url = $this->generateItemUrl($item['default']);
 
             // Create a `Collection` of the children items
             $children = $this->createItems(array_except($item, 'default'));
@@ -184,8 +177,8 @@ class Menu
 
         return new Item(
             $title,
-            $default,
-            $this->isUrlActive($default),
+            $url,
+            $this->isUrlActive($url),
             $children,
             $this->config['active_class'],
             $this->config['children_class']
@@ -208,7 +201,6 @@ class Menu
     protected function isItemArray($item)
     {
         return is_array($item)
-            && !array_has($item, 'default')
             && in_array(key($item), ['to', 'secure', 'asset', 'route', 'action']);
     }
 
@@ -219,9 +211,9 @@ class Menu
      *
      * @return boolean
      */
-    protected function isNestedItem($item)
+    protected function hasNestedItems($item)
     {
-        return is_array($item) && array_has($item, 'default');
+        return is_array($item) && in_array('default', array_keys($item));
     }
 
     /**
@@ -234,5 +226,24 @@ class Menu
     protected function isUrlActive($url)
     {
         return $this->request->is($url);
+    }
+
+    /**
+     * Generates a URL using `UrlGenerator`. If `$item` is a string, then an
+     * absolute URL from the application path is provided. If `$item` is an
+     * array, the key of the array corresponds to a method on the `UrlGenerator`
+     * instance, and the value is passed as a parameter.
+     *
+     * @param  array|string $item
+     *
+     * @return string
+     */
+    protected function generateItemUrl($item)
+    {
+        if ($this->isItemArray($item)) {
+            $type = key($item);
+            return $this->generator->$type($item[$type]);
+        }
+        return $this->generator->to($item);
     }
 }
