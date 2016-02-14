@@ -159,13 +159,14 @@ class Menu
     protected function createItem($title, $item)
     {
         // The best way to be ;)
-        $children   = null;
-        $default    = $item;
+        $children = null;
+        $default  = $item;
 
-        // If `$item` is an array and that array has a `route` key, then
-        // attempt to generate a URL from the route name.
-        if ($this->isRouteItem($item)) {
-            $default = $this->getRouteItemUrl($item);
+        // If `$item` is an array, then attempt to generate a URL from the
+        // provided parameters.
+        if ($this->isItemArray($item)) {
+            $type = key($item);
+            $default = $this->generator->$type($item[$type]);
         }
 
         // If `$item` is an array and that array has a `default` key, then
@@ -174,8 +175,9 @@ class Menu
             // Get `default` item URL
             $default = array_only($item, 'default')['default'];
 
-            if ($this->isRouteItem($default)) {
-                $default = $this->getRouteItemUrl($default);
+            if ($this->isItemArray($default)) {
+                $type = key($default);
+                $default = $this->generator->$type($default[$type]);
             }
 
             // Create a `Collection` of the children items
@@ -193,15 +195,23 @@ class Menu
     }
 
     /**
-     * Checks whether an item has a `route` key.
+     * Checks whether an item is an array and contains one of the following keys:
+     *
+     * - `to`
+     * - `secure`
+     * - `asset`
+     * - `route`
+     * - `action`
      *
      * @param  array|string  $item
      *
      * @return boolean
      */
-    protected function isRouteItem($item)
+    protected function isItemArray($item)
     {
-        return is_array($item) && array_has($item, 'route');
+        return is_array($item)
+            && !array_has($item ,'default')
+            && in_array(key($item), ['to', 'secure', 'asset', 'route', 'action']);
     }
 
     /**
@@ -214,18 +224,6 @@ class Menu
     protected function isNestedItem($item)
     {
         return is_array($item) && array_has($item, 'default');
-    }
-
-    /**
-     * Generates a URL for a given `$item`'s route.
-     *
-     * @param  array  $item
-     *
-     * @return string
-     */
-    protected function getRouteItemUrl(array $item)
-    {
-        return $this->generator->route($item['route']);
     }
 
     /**
