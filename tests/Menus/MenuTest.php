@@ -35,6 +35,11 @@ class MenuTest extends TestCase
         $this->requestMock = m::mock('Illuminate\Http\Request');
         $this->generatorMock = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
         $this->viewFactoryMock = m::mock('Illuminate\Contracts\View\Factory');
+
+        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
     }
 
     /**
@@ -44,8 +49,6 @@ class MenuTest extends TestCase
      */
     public function testGetName($items)
     {
-        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
-            ->andReturn($this->requestMock);
         $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $this->assertEquals('test', $menu->getName());
     }
@@ -64,10 +67,6 @@ class MenuTest extends TestCase
     public function testAddItems($items)
     {
         $this->requestMock->shouldReceive('is')->times(3)->andReturn(true, false, false);
-        $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
-            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
-            ->andReturn($this->requestMock);
         $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $menu->addItems($items);
 
@@ -88,10 +87,6 @@ class MenuTest extends TestCase
     public function testAddItem($items)
     {
         $this->requestMock->shouldReceive('is')->times(3)->andReturn(true, false, false);
-        $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
-            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
-            ->andReturn($this->requestMock);
         $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
 
         foreach ($items as $title => $value) {
@@ -116,10 +111,6 @@ class MenuTest extends TestCase
     public function testAddNestedItems($items)
     {
         $this->requestMock->shouldReceive('is')->times(4)->andReturn(true, false, false);
-        $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
-            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
-            ->andReturn($this->requestMock);
         $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $menu->addItems($items);
 
@@ -142,44 +133,15 @@ class MenuTest extends TestCase
      */
     public function testToHtml($items)
     {
-        $output = '
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
-    </head>
-    <body>
-        <section class="sidebar">
-  <ul class="sidebar-menu">
-    <li class="header">MAIN NAVIGATION</li>
-    <li class=" ">
-  <a href="/">Home </a>
-  </li>
-<li class=" ">
-  <a href="about">About </a>
-  </li>
-<li class=" ">
-  <a href="contact">Contact </a>
-  </li>
-  </ul>
-</section>
-
-    </body>
-</html>
-';
-
         $this->requestMock->shouldReceive('is')->times(3)->andReturn(true, false, false);
-        $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
-            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
-            ->andReturn($this->requestMock);
+
         $viewMock = m::mock('Illuminate\Contracts\View\View');
-        $viewMock->shouldReceive('render')->once()->andReturn($output);
+        $viewMock->shouldReceive('render')->once()->andReturn($this->getSimpleOutput());
         $this->viewFactoryMock->shouldReceive('make')->once()->andReturn($viewMock);
         $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $menu->addItems($items);
 
-        $this->assertEquals($output, $menu->toHtml());
+        $this->assertEquals($this->getSimpleOutput(), $menu->toHtml());
     }
 
     /**
@@ -232,5 +194,34 @@ class MenuTest extends TestCase
                 ]
             ]
         ];
+    }
+
+    private function getSimpleOutput()
+    {
+        return '
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laravel</title>
+    </head>
+    <body>
+        <section class="sidebar">
+  <ul class="sidebar-menu">
+    <li class="header">MAIN NAVIGATION</li>
+    <li class=" ">
+  <a href="/">Home </a>
+  </li>
+<li class=" ">
+  <a href="about">About </a>
+  </li>
+<li class=" ">
+  <a href="contact">Contact </a>
+  </li>
+  </ul>
+</section>
+
+    </body>
+</html>
+';
     }
 }
