@@ -21,6 +21,23 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.2.1 - 2016-02-14
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Relaxing version requirements for Illuminate components to allow install on Laravel 5.1+
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.2 - 2016-02-13
 
 ### Added
