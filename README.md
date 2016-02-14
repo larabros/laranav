@@ -23,21 +23,15 @@ Via Composer
 $ composer require hassankhan/laranav
 ```
 
-Then add the service provider to the `providers` array in `config/app.php`:
+Then, open `config/app.php` and add the service provider. You can optionally add the `Nav` facade:
 
 ``` php
 'providers' => [
 
-        ...
-        Laranav\LaranavServiceProvider::class,
+    ...
+    Laranav\LaranavServiceProvider::class,
 
 ],
-
-```
-
-Optionally, you can also add a `Nav` facade by adding it to the `aliases` array in `config/app.php`:
-
-```php
 'aliases' => [
 
     ...
@@ -84,10 +78,20 @@ Items are defined like this:
 ]
 ```
 
-If the item links to a route:
+You can use Laravel's routing to generate URLs for the menu items - the following methods are allowed:
+
+- `to()`
+- `secure()`
+- `asset()`
+- `route()`
+- `action()`
+
+Items are then defined like this:
 ``` php
 [
-    'RoutedItem' => ['route' => 'home']
+    'Home'    => ['route' => 'home'],
+    'About'   => ['action' => 'HomeController@about'],
+    'Contact' => ['to' => 'contact'],
 ]
 ```
 
