@@ -30,7 +30,7 @@ class ManagerTest extends TestCase
         $request->shouldReceive('is')->zeroOrMoreTimes()
             ->andReturn(true, false);
 
-        $router->shouldReceive('getCurrentRequest')
+        $urlGenerator->shouldReceive('getRequest')
             ->zeroOrMoreTimes()->andReturn($request);
 
         $config->shouldReceive('get')

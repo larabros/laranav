@@ -21,6 +21,23 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.2 - 2016-02-13
+
+### Added
+- Can now use methods from `Illuminate\Contracts\Routing\UrlGenerator` to generate link URLs
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Unnecessary dependency from `Menu::__construct()`
+
+### Security
+- Nothing
+
 ## 0.1 - 2016-02-13
 
 ### Added
