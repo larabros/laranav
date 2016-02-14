@@ -1,1 +1,0 @@
-- Make Manager extend Illuminate\Manager

@@ -7,11 +7,11 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-An easy-to-use, customisable menu and navigation package for Laravel.
+An easy-to-use, customisable menu and navigation package for Laravel 5.1+.
 
 Why is this different from every other menu package?
 
-- Define your menus in a simple config file
+- Define your menus in simple config files
 - Use regular ol' Blade templates for rendering menus - never build HTML programatically again!
 - Fully-tested
 
