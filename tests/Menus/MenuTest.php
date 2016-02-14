@@ -10,6 +10,9 @@ use \Mockery as m;
 class MenuTest extends TestCase
 {
 
+    /**
+     * An example base application URL.
+     */
     const BASE_URL = 'http://localhost';
 
     /**
@@ -40,6 +43,8 @@ class MenuTest extends TestCase
             ->andReturn($this->requestMock);
         $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
             ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
+        $this->generatorMock->shouldReceive('to')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/');
     }
 
     /**
