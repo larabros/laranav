@@ -3,9 +3,10 @@
 namespace Laranav\Menus\Tests;
 
 use Laranav\Menus\Menu;
-use Illuminate\Support\Collection;
+use Laranav\Tests\TestCase;
+use \Mockery as m;
 
-class MenuTest extends \PHPUnit_Framework_TestCase
+class MenuTest extends TestCase
 {
     /**
      * @var Menu

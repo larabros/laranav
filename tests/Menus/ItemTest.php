@@ -4,8 +4,10 @@ namespace Laranav\Menus\Tests;
 
 use Laranav\Menus\Item;
 use Illuminate\Support\Collection;
+use Laranav\Tests\TestCase;
+use \Mockery as m;
 
-class ItemTest extends \PHPUnit_Framework_TestCase
+class ItemTest extends TestCase
 {
     /**
      * @covers       Laranav\Menus\Item::__construct()
