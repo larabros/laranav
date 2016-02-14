@@ -23,6 +23,8 @@ class LaranavServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views' => base_path('resources/views/vendor/laranav'),
         ], 'views');
+
+        $this->registerViewComposers();
     }
 
     /**
@@ -44,5 +46,30 @@ class LaranavServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['nav'];
+    }
+
+    /**
+     * Binds any view composers found in the config to the container.
+     *
+     * @return void
+     */
+    protected function registerViewComposers()
+    {
+        $configs = $this->app['config']['laranav.config'];
+
+        foreach ($configs as $title => $config) {
+            if (array_key_exists('view_composer', $config)) {
+
+                // Bind view composer to container
+                $this->app->bind($config['view_composer'], function($app) use ($title, $config) {
+                    $menu         = $app->make('nav')->menu($title);
+                    $viewComposer = $config['view_composer'];
+                    return new $viewComposer($menu);
+                });
+
+                // Bind view composer to view
+                $this->app->make('view')->composer($config['views']['menu'], $config['view_composer']);
+            }
+        }
     }
 }
