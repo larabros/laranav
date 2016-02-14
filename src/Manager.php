@@ -49,7 +49,7 @@ class Manager extends AbstractManager
      */
     protected function createDriver($name)
     {
-        $config = $this->getConfig($name);
+        $config = array_merge($this->getConfig($this->getDefaultDriver()), $this->getConfig($name));
         $items  = $this->getMenuItems($name);
 
         return new Menu(

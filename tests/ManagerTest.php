@@ -32,6 +32,8 @@ class ManagerTest extends TestCase
 
         $urlGenerator->shouldReceive('getRequest')
             ->zeroOrMoreTimes()->andReturn($request);
+        $urlGenerator->shouldReceive('to')->zeroOrMoreTimes()
+            ->andReturn('http://localhost/');
 
         $config->shouldReceive('get')
             ->with('laranav.config.default')
@@ -46,12 +48,30 @@ class ManagerTest extends TestCase
             ]);
 
         $config->shouldReceive('get')
+            ->with('laranav.config.nav')
+            ->zeroOrMoreTimes()
+            ->andReturn([
+                'views' => [
+                    'menu' => 'laranav::partials.nav',
+                    'item' => 'laranav::partials.nav-item',
+                ]
+            ]);
+
+        $config->shouldReceive('get')
             ->with('laranav.menus.default')
             ->zeroOrMoreTimes()
             ->andReturn([
                 'Home'    => '/',
                 'About'   => 'about',
                 'Contact' => 'contact',
+            ]);
+
+        $config->shouldReceive('get')
+            ->with('laranav.menus.nav')
+            ->zeroOrMoreTimes()
+            ->andReturn([
+                'Side Item 1' => '/side-1',
+                'Side Item 2' => '/side-2',
             ]);
 
         $app->shouldReceive('make')
@@ -88,5 +108,23 @@ class ManagerTest extends TestCase
     public function testMenu()
     {
         $this->assertInstanceOf('Laranav\Menus\Menu', $this->manager->menu());
+        $this->assertCount(3, $this->manager->menu()->getItems());
+    }
+
+    /**
+     * @covers Laranav\Manager::menu()
+     * @covers Laranav\Manager::getDefaultDriver()
+     * @covers Laranav\Manager::driver()
+     * @covers Laranav\Manager::createDriver()
+     * @covers Laranav\Manager::getConfig()
+     * @covers Laranav\Manager::getMenuItems()
+     */
+    public function testDefaultMenuAndSecondaryMenu()
+    {
+        $this->assertInstanceOf('Laranav\Menus\Menu', $this->manager->menu());
+        $this->assertInstanceOf('Laranav\Menus\Menu', $this->manager->menu('nav'));
+
+        $this->assertCount(3, $this->manager->menu()->getItems());
+        $this->assertCount(2, $this->manager->menu('nav')->getItems());
     }
 }
