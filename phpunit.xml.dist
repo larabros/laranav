@@ -7,16 +7,22 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
+         forceCoversAnnotation="true"
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="hassankhan Test Suite">
+        <testsuite name="Laranav Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory suffix=".php">src/</directory>
+            <exclude>
+              <directory suffix=".php">src/config/</directory>
+              <directory suffix=".php">src/Facades/</directory>
+              <file>src/LaranavServiceProvider.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <logging>
