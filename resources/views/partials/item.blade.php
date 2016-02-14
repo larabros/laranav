@@ -1,4 +1,4 @@
-<li class="{{ $item->hasChildren() }} {{ $item->isActive() }}">
+<li class="{{ $item->getClasses() }}">
   <a href="{!! $item->getUrl() !!}">{!! $item->getTitle() !!} </a>
   @if($item->hasChildren())
   <ul class="dropdown-menu">
