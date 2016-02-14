@@ -134,11 +134,11 @@ class Item
 
         // Check if this is the active item
         if ($this->isActive()) {
-            $classesString += $this->activeClass + ' ';
+            $classesString .= "$this->activeClass ";
         }
 
         if ($this->hasChildren()) {
-            $classesString += $this->childrenClass + ' ';
+            $classesString .= "$this->childrenClass ";
         }
 
         return trim($classesString);

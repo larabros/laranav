@@ -8,23 +8,6 @@ use Illuminate\Support\Collection;
 class ItemTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Item
-     */
-    protected $item;
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp() {}
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown() {}
-
-    /**
      * @covers       Laranav\Menus\Item::__construct()
      * @covers       Laranav\Menus\Item::getTitle()
      * @dataProvider itemProvider()
@@ -49,25 +32,109 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::hasChildren()
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::isActive()
      * @dataProvider itemProvider()
      */
-    public function testHasNoChildren($itemData)
+    public function testGetIsActive($itemData)
     {
         list($title, $url) = $itemData;
-        $item = new Item($title, $url);
-        $this->assertFalse($item->hasChildren());
+        $item = new Item($title, $url, true);
+        $this->assertTrue($item->isActive());
     }
 
     /**
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::isActive()
+     * @dataProvider itemProvider()
+     */
+    public function testGetIsInactive($itemData)
+    {
+        list($title, $url) = $itemData;
+        $item = new Item($title, $url);
+        $this->assertFalse($item->isActive());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Item::__construct()
      * @covers       Laranav\Menus\Item::hasChildren()
+     * @covers       Laranav\Menus\Item::getChildren()
+     * @dataProvider itemProvider()
+     */
+    public function testGetNoChildren($itemData)
+    {
+        list($title, $url) = $itemData;
+        $item = new Item($title, $url);
+
+        $this->assertFalse($item->hasChildren());
+        $this->assertCount(0, $item->getChildren());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::hasChildren()
+     * @covers       Laranav\Menus\Item::getChildren()
      * @dataProvider nestedItemProvider()
      */
-    public function testHasChildren($itemData)
+    public function testGetChildren($itemData)
     {
         list($title, $url, $isActive, $children) = $itemData;
         $item = new Item($title, $url, $isActive, $children);
-        $this->assertTrue($item->hasChildren());
+
+        $this->assertCount(1, $item->getChildren());
+        $this->assertContainsOnlyInstancesOf(Item::class, $item->getChildren()->toArray());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::getClasses()
+     * @dataProvider itemProvider()
+     */
+    public function testGetClasses($itemData)
+    {
+        list($title, $url) = $itemData;
+        $item = new Item($title, $url);
+
+        $this->assertEmpty($item->getClasses());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::getClasses()
+     * @dataProvider itemProvider()
+     */
+    public function testGetClassesWhenActive($itemData)
+    {
+        list($title, $url) = $itemData;
+        $item = new Item($title, $url, true);
+
+        $this->assertEquals('active', $item->getClasses());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::getClasses()
+     * @dataProvider nestedItemProvider()
+     */
+    public function testGetClassesWithChildren($itemData)
+    {
+        list($title, $url, $isActive, $children) = $itemData;
+        $item = new Item($title, $url, $isActive, $children);
+
+        $this->assertEquals('dropdown', $item->getClasses());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Item::__construct()
+     * @covers       Laranav\Menus\Item::getClasses()
+     * @dataProvider nestedItemProvider()
+     */
+    public function testGetClassesWhenActiveWithChildren($itemData)
+    {
+        list($title, $url, $isActive, $children) = $itemData;
+        $item = new Item($title, $url, true, $children);
+
+        $this->assertEquals('active dropdown', $item->getClasses());
     }
 
     /**
@@ -95,7 +162,7 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                ['Nested', '/', false, new Collection(['Item1' => '/nestedItem1']) ],
+                ['Nested', '/', false, new Collection([new Item('Item1', '/nestedItem1')]) ],
             ]
         ];
     }
