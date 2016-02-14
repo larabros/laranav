@@ -171,7 +171,6 @@ class Menu
         // If `$item` is an array and that array has a `default` key, then
         // the item has children.
         if ($this->isNestedItem($item)) {
-
             // Get `default` item URL
             $default = array_only($item, 'default')['default'];
 
