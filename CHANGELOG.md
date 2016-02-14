@@ -20,3 +20,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Security
 - Nothing
+
+## 0.1 - 2016-02-13
+
+### Added
+- Base classes and tests
