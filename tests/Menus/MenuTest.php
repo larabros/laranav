@@ -32,7 +32,7 @@ class MenuTest extends TestCase
             ]
         ];
 
-        $this->requestMock = m::mock('Illuminate\Http\Request[is]');
+        $this->requestMock = m::mock('Illuminate\Http\Request');
         $this->generatorMock = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
         $this->viewFactoryMock = m::mock('Illuminate\Contracts\View\Factory');
     }
@@ -44,7 +44,9 @@ class MenuTest extends TestCase
      */
     public function testGetName($items)
     {
-        $menu = new Menu('test', [], $this->config, $this->requestMock, $this->generatorMock, $this->viewFactoryMock);
+        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $this->assertEquals('test', $menu->getName());
     }
 
@@ -64,7 +66,9 @@ class MenuTest extends TestCase
         $this->requestMock->shouldReceive('is')->times(3)->andReturn(true, false, false);
         $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
             ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $menu = new Menu('test', [], $this->config, $this->requestMock, $this->generatorMock, $this->viewFactoryMock);
+        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $menu->addItems($items);
 
         $this->assertCount(3, $menu->getItems());
@@ -86,7 +90,9 @@ class MenuTest extends TestCase
         $this->requestMock->shouldReceive('is')->times(3)->andReturn(true, false, false);
         $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
             ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $menu = new Menu('test', [], $this->config, $this->requestMock, $this->generatorMock, $this->viewFactoryMock);
+        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
 
         foreach ($items as $title => $value) {
             $menu->addItem($title, $value);
@@ -112,7 +118,9 @@ class MenuTest extends TestCase
         $this->requestMock->shouldReceive('is')->times(4)->andReturn(true, false, false);
         $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
             ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
-        $menu = new Menu('test', [], $this->config, $this->requestMock, $this->generatorMock, $this->viewFactoryMock);
+        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $menu->addItems($items);
 
         $this->assertCount(2, $menu->getItems());
@@ -163,10 +171,12 @@ class MenuTest extends TestCase
         $this->requestMock->shouldReceive('is')->times(3)->andReturn(true, false, false);
         $this->generatorMock->shouldReceive('route')->zeroOrMoreTimes()
             ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/about', self::BASE_URL.'/contact');
+        $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
         $viewMock = m::mock('Illuminate\Contracts\View\View');
         $viewMock->shouldReceive('render')->once()->andReturn($output);
         $this->viewFactoryMock->shouldReceive('make')->once()->andReturn($viewMock);
-        $menu = new Menu('test', [], $this->config, $this->requestMock, $this->generatorMock, $this->viewFactoryMock);
+        $menu = new Menu('test', [], $this->config, $this->generatorMock, $this->viewFactoryMock);
         $menu->addItems($items);
 
         $this->assertEquals($output, $menu->toHtml());

@@ -56,7 +56,6 @@ class Manager extends AbstractManager
             $name,
             $items,
             $config,
-            $this->app->make('router')->getCurrentRequest(),
             $this->app->make('url'),
             $this->app->make('view')
         );

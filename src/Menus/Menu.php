@@ -57,7 +57,6 @@ class Menu
      * @param string       $name
      * @param array        $items
      * @param array        $config
-     * @param Request      $request
      * @param UrlGenerator $generator
      * @param Factory      $viewFactory
      */
@@ -65,13 +64,12 @@ class Menu
         $name,
         array $items,
         array $config,
-        Request $request,
         UrlGenerator $generator,
         Factory $viewFactory
     ) {
         $this->name        = $name;
         $this->config      = $config;
-        $this->request     = $request;
+        $this->request     = $generator->getRequest();
         $this->generator   = $generator;
         $this->viewFactory = $viewFactory;
 
