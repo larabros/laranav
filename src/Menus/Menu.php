@@ -54,15 +54,16 @@ class Menu
     /**
      * Create a new `Menu` instance.
      *
-     * @param string  $name
-     * @param array   $items
-     * @param array   $config
-     * @param Factory $viewFactory
-     * @param Request $request
+     * @param string       $name
+     * @param array        $items
+     * @param array        $config
+     * @param Request      $request
+     * @param UrlGenerator $generator
+     * @param Factory      $viewFactory
      */
     public function __construct(
-        $name = 'default',
-        array $items = [],
+        $name,
+        array $items,
         array $config,
         Request $request,
         UrlGenerator $generator,
@@ -88,14 +89,34 @@ class Menu
         return $this->name;
     }
 
-    public function addItems($items)
+    /**
+     * Returns `Collection` of `Item` objects.
+     *
+     * @return Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Adds multiple items to the menu.
+     *
+     * @param array $items
+     */
+    public function addItems(array $items)
     {
         $this->items = $this->items->merge($this->createItems($items));
     }
 
+    /**
+     * Adds an item to the menu.
+     *
+     * @param string       $title
+     * @param array|string $item
+     */
     public function addItem($title, $item)
     {
-        // Create a new `Item`
         $this->items->push($this->createItem($title, $item));
     }
 
@@ -111,7 +132,14 @@ class Menu
             ->render();
     }
 
-    protected function createItems($items)
+    /**
+     * Creates and returns a `Collection` of `Items`.
+     *
+     * @param  array $items
+     *
+     * @return Collection
+     */
+    protected function createItems(array $items)
     {
         $itemCollection = [];
         foreach ($items as $title => $item) {
@@ -121,10 +149,10 @@ class Menu
     }
 
     /**
-     * Creates `Item` objects from an (nested) array of `$items` and returns
-     * a `Collection`.
+     * Creates and returns a new instance of `Item`.
      *
-     * @param  array $item
+     * @param  string        $title
+     * @param  array|string  $item
      *
      * @return Item
      */
@@ -165,16 +193,37 @@ class Menu
         );
     }
 
+    /**
+     * Checks whether an item has a `route` key.
+     *
+     * @param  array  $item
+     *
+     * @return boolean
+     */
     protected function isRouteItem($item)
     {
         return is_array($item) && array_has($item, 'route');
     }
 
+    /**
+     * Checks whether an item has a `default` key.
+     *
+     * @param  array  $item
+     *
+     * @return boolean
+     */
     protected function isNestedItem($item)
     {
         return is_array($item) && array_has($item, 'default');
     }
 
+    /**
+     * Generates a URL for a given `$item`'s route.
+     *
+     * @param  array  $item
+     *
+     * @return string
+     */
     protected function getRouteItemUrl(array $item)
     {
         return $this->generator->route($item['route']);
@@ -189,10 +238,6 @@ class Menu
      */
     protected function isUrlActive($url)
     {
-        if(is_array($url)) {
-            // dd($url);
-        }
-        // var_dump($url);
         return $this->request->is($url);
     }
 }
