@@ -210,7 +210,7 @@ class Menu
     protected function isItemArray($item)
     {
         return is_array($item)
-            && !array_has($item ,'default')
+            && !array_has($item, 'default')
             && in_array(key($item), ['to', 'secure', 'asset', 'route', 'action']);
     }
 
