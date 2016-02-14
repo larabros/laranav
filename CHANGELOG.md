@@ -21,6 +21,24 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.2.2 - 2016-02-14
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Menu item sample partial can now render any amount of nested children
+- All menus now inherit configuration options from `default`
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.2.1 - 2016-02-14
 
 ### Added
