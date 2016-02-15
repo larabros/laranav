@@ -225,7 +225,8 @@ class Menu
      */
     protected function isUrlActive($url)
     {
-        return $this->request->is($url);
+        $path = trim(str_replace($this->request->root(), '', $url), '/');
+        return $this->request->is($path);
     }
 
     /**
