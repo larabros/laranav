@@ -151,6 +151,39 @@ class MenuTest extends TestCase
     }
 
     /**
+     * @covers       Laranav\Menus\Menu::__construct()
+     * @covers       Laranav\Menus\Menu::addItems()
+     * @covers       Laranav\Menus\Menu::createItems()
+     * @covers       Laranav\Menus\Menu::isItemArray()
+     * @covers       Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Laranav\Menus\Menu::isUrlActive()
+     * @covers       Laranav\Menus\Menu::toHtml()
+     * @covers       Laranav\Menus\Menu::getItems()
+     * @dataProvider nestedMenuProvider()
+     */
+    public function testToHtmlWithNestedItems($items)
+    {
+        $this->requestMock->shouldReceive('is')->times(8)->andReturn(true, false, false);
+
+        $generatorMock   = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
+        $generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $generatorMock->shouldReceive('route')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/', self::BASE_URL.'/item1', self::BASE_URL.'/item2');
+        $generatorMock->shouldReceive('to')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/');
+
+        $viewMock = m::mock('Illuminate\Contracts\View\View');
+        $viewMock->shouldReceive('render')->once()->andReturn($this->getNestedOutput());
+        $this->viewFactoryMock->shouldReceive('make')->once()->andReturn($viewMock);
+        $menu = new Menu('test', $items, $this->config, $generatorMock, $this->viewFactoryMock);
+        $menu->addItems($items);
+
+        $this->assertEquals($this->getNestedOutput(), $menu->toHtml());
+    }
+
+    /**
      * Provides example menus.
      */
     public function menuProvider()
@@ -193,7 +226,7 @@ class MenuTest extends TestCase
                 [
                     'Home'     => '/',
                     'Dropdown' => [
-                        'default' => ['route' => 'dropdown'],
+                        'default' => ['to' => '/'],
                         'Item 1' =>  ['route' => 'item1'],
                         'Item 2' =>  ['route' => 'item2'],
                     ]
