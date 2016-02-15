@@ -9,7 +9,6 @@ use \Mockery as m;
 
 class MenuTest extends TestCase
 {
-
     /**
      * An example base application URL.
      */
@@ -35,6 +34,8 @@ class MenuTest extends TestCase
         $this->requestMock     = m::mock('Illuminate\Http\Request');
         $this->generatorMock   = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
         $this->viewFactoryMock = m::mock('Illuminate\Contracts\View\Factory');
+
+        $this->requestMock->shouldReceive('root')->zeroOrMoreTimes()->andReturn(self::BASE_URL);
 
         $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
             ->andReturn($this->requestMock);

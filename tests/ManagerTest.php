@@ -10,6 +10,11 @@ use \Mockery as m;
 class ManagerTest extends TestCase
 {
     /**
+     * An example base application URL.
+     */
+    const BASE_URL = 'http://localhost';
+
+    /**
      * @var Manager
      */
     protected $manager;
@@ -30,10 +35,12 @@ class ManagerTest extends TestCase
         $request->shouldReceive('is')->zeroOrMoreTimes()
             ->andReturn(true, false);
 
+        $request->shouldReceive('root')->zeroOrMoreTimes()->andReturn(self::BASE_URL);
+
         $urlGenerator->shouldReceive('getRequest')
             ->zeroOrMoreTimes()->andReturn($request);
         $urlGenerator->shouldReceive('to')->zeroOrMoreTimes()
-            ->andReturn('http://localhost/');
+            ->andReturn(self::BASE_URL);
 
         $config->shouldReceive('get')
             ->with('laranav.config.default')
