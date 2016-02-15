@@ -237,30 +237,11 @@ class MenuTest extends TestCase
 
     private function getSimpleOutput()
     {
-        return '
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
-    </head>
-    <body>
-        <section class="sidebar">
-  <ul class="sidebar-menu">
-    <li class="header">MAIN NAVIGATION</li>
-    <li class=" ">
-  <a href="/">Home </a>
-  </li>
-<li class=" ">
-  <a href="about">About </a>
-  </li>
-<li class=" ">
-  <a href="contact">Contact </a>
-  </li>
-  </ul>
-</section>
+        return file_get_contents(__DIR__ . '/../fixtures/simple.html');
+    }
 
-    </body>
-</html>
-';
+    private function getNestedOutput()
+    {
+        return file_get_contents(__DIR__ . '/../fixtures/nested.html');
     }
 }
