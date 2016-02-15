@@ -229,10 +229,10 @@ class Menu
     }
 
     /**
-     * Generates a URL using `UrlGenerator`. If `$item` is a string, then an
-     * absolute URL from the application path is provided. If `$item` is an
-     * array, the key of the array corresponds to a method on the `UrlGenerator`
-     * instance, and the value is passed as a parameter.
+     * Generates a URL using `UrlGenerator`. If `$item` is a string, then it is
+     * returned unchanged. If `$item` is an array, the key of the array
+     * corresponds to a method on the `UrlGenerator` instance, and the value is
+     * passed as a parameter.
      *
      * @param  array|string $item
      *
@@ -244,6 +244,6 @@ class Menu
             $type = key($item);
             return $this->generator->$type($item[$type]);
         }
-        return $this->generator->to($item);
+        return $item;
     }
 }
