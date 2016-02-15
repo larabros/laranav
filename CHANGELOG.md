@@ -21,6 +21,23 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.3.1 - 2016-02-15
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Broken test fixtures
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3 - 2016-02-15
 
 ### Added
