@@ -21,6 +21,24 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.3 - 2016-02-15
+
+### Added
+- More test coverage
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Active classes now apply correctly
+
+### Removed
+- Removed unused `views.item` option from menu configuration options and replaced with single `view` option
+- Removed useless `phpcbf.xml.dist` from source control
+
+### Security
+- Nothing
+
 ## 0.2.2 - 2016-02-14
 
 ### Added
