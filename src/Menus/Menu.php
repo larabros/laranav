@@ -126,7 +126,7 @@ class Menu
     public function toHtml()
     {
         return $this->viewFactory
-            ->make($this->config['views']['menu'], ['menuItems' => $this->items->all()])
+            ->make($this->config['view'], ['menuItems' => $this->items->all()])
             ->render();
     }
 
@@ -225,14 +225,15 @@ class Menu
      */
     protected function isUrlActive($url)
     {
-        return $this->request->is($url);
+        $path = trim(str_replace($this->request->root(), '', $url), '/');
+        return $this->request->is($path);
     }
 
     /**
-     * Generates a URL using `UrlGenerator`. If `$item` is a string, then an
-     * absolute URL from the application path is provided. If `$item` is an
-     * array, the key of the array corresponds to a method on the `UrlGenerator`
-     * instance, and the value is passed as a parameter.
+     * Generates a URL using `UrlGenerator`. If `$item` is a string, then it is
+     * returned unchanged. If `$item` is an array, the key of the array
+     * corresponds to a method on the `UrlGenerator` instance, and the value is
+     * passed as a parameter.
      *
      * @param  array|string $item
      *
@@ -244,6 +245,6 @@ class Menu
             $type = key($item);
             return $this->generator->$type($item[$type]);
         }
-        return $this->generator->to($item);
+        return $item;
     }
 }

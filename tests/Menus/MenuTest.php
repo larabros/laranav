@@ -27,16 +27,13 @@ class MenuTest extends TestCase
     protected function setUp()
     {
         $this->config = [
-            'active_class' => 'active',
+            'active_class'   => 'active',
             'children_class' => 'dropdown',
-            'views' => [
-                'menu' => 'laranav::partials.menu',
-                'item' => 'laranav::partials.item',
-            ]
+            'view'           => 'laranav::partials.menu',
         ];
 
-        $this->requestMock = m::mock('Illuminate\Http\Request');
-        $this->generatorMock = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
+        $this->requestMock     = m::mock('Illuminate\Http\Request');
+        $this->generatorMock   = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
         $this->viewFactoryMock = m::mock('Illuminate\Contracts\View\Factory');
 
         $this->generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
@@ -65,6 +62,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::createItem()
      * @covers       Laranav\Menus\Menu::isItemArray()
      * @covers       Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Laranav\Menus\Menu::generateItemUrl()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
@@ -85,6 +83,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::createItem()
      * @covers       Laranav\Menus\Menu::isItemArray()
      * @covers       Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Laranav\Menus\Menu::generateItemUrl()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
@@ -109,6 +108,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::createItem()
      * @covers       Laranav\Menus\Menu::isItemArray()
      * @covers       Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Laranav\Menus\Menu::generateItemUrl()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::getItems()
      * @dataProvider nestedMenuProvider()
@@ -131,6 +131,7 @@ class MenuTest extends TestCase
      * @covers       Laranav\Menus\Menu::createItems()
      * @covers       Laranav\Menus\Menu::isItemArray()
      * @covers       Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Laranav\Menus\Menu::generateItemUrl()
      * @covers       Laranav\Menus\Menu::isUrlActive()
      * @covers       Laranav\Menus\Menu::toHtml()
      * @covers       Laranav\Menus\Menu::getItems()
@@ -147,6 +148,39 @@ class MenuTest extends TestCase
         $menu->addItems($items);
 
         $this->assertEquals($this->getSimpleOutput(), $menu->toHtml());
+    }
+
+    /**
+     * @covers       Laranav\Menus\Menu::__construct()
+     * @covers       Laranav\Menus\Menu::addItems()
+     * @covers       Laranav\Menus\Menu::createItems()
+     * @covers       Laranav\Menus\Menu::isItemArray()
+     * @covers       Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Laranav\Menus\Menu::isUrlActive()
+     * @covers       Laranav\Menus\Menu::toHtml()
+     * @covers       Laranav\Menus\Menu::getItems()
+     * @dataProvider nestedMenuProvider()
+     */
+    public function testToHtmlWithNestedItems($items)
+    {
+        $this->requestMock->shouldReceive('is')->times(8)->andReturn(true, false, false);
+
+        $generatorMock   = m::mock('Illuminate\Contracts\Routing\UrlGenerator');
+        $generatorMock->shouldReceive('getRequest')->zeroOrMoreTimes()
+            ->andReturn($this->requestMock);
+        $generatorMock->shouldReceive('route')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/', self::BASE_URL.'/', self::BASE_URL.'/item1', self::BASE_URL.'/item2');
+        $generatorMock->shouldReceive('to')->zeroOrMoreTimes()
+            ->andReturn(self::BASE_URL.'/');
+
+        $viewMock = m::mock('Illuminate\Contracts\View\View');
+        $viewMock->shouldReceive('render')->once()->andReturn($this->getNestedOutput());
+        $this->viewFactoryMock->shouldReceive('make')->once()->andReturn($viewMock);
+        $menu = new Menu('test', $items, $this->config, $generatorMock, $this->viewFactoryMock);
+        $menu->addItems($items);
+
+        $this->assertEquals($this->getNestedOutput(), $menu->toHtml());
     }
 
     /**
@@ -192,7 +226,7 @@ class MenuTest extends TestCase
                 [
                     'Home'     => '/',
                     'Dropdown' => [
-                        'default' => ['route' => 'dropdown'],
+                        'default' => ['to' => '/'],
                         'Item 1' =>  ['route' => 'item1'],
                         'Item 2' =>  ['route' => 'item2'],
                     ]
@@ -203,30 +237,11 @@ class MenuTest extends TestCase
 
     private function getSimpleOutput()
     {
-        return '
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
-    </head>
-    <body>
-        <section class="sidebar">
-  <ul class="sidebar-menu">
-    <li class="header">MAIN NAVIGATION</li>
-    <li class=" ">
-  <a href="/">Home </a>
-  </li>
-<li class=" ">
-  <a href="about">About </a>
-  </li>
-<li class=" ">
-  <a href="contact">Contact </a>
-  </li>
-  </ul>
-</section>
+        return file_get_contents(__DIR__ . '/../fixtures/simple.html');
+    }
 
-    </body>
-</html>
-';
+    private function getNestedOutput()
+    {
+        return file_get_contents(__DIR__ . '/../fixtures/nested.html');
     }
 }
