@@ -55,6 +55,8 @@ class Item
      * @param string          $url
      * @param boolean         $isActive
      * @param Collection|null $children
+     * @param string          $activeClass
+     * @param string          $childrenClass
      */
     public function __construct(
         $title,
