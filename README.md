@@ -103,7 +103,7 @@ Items in a menu are defined like this:
 ]
 ```
 
-You can use Laravel's routing to generate URLs for the menu items - the following methods are allowed:
+You can use Laravel's routing to generate URLs from routes defined in your application's `routes.php` - the following methods are allowed:
 
 - `to()`
 - `secure()`
