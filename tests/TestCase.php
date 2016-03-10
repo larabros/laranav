@@ -1,6 +1,6 @@
 <?php
 
-namespace Laranav\Tests;
+namespace Larabros\Laranav\Tests;
 
 use \Mockery as m;
 

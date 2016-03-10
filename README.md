@@ -20,7 +20,7 @@ Why is this different from every other menu package?
 Via Composer
 
 ``` bash
-$ composer require hassankhan/laranav
+$ composer require larabros/laranav
 ```
 
 Then, open `config/app.php` and add the service provider. You can optionally add the `Nav` facade:
@@ -159,17 +159,17 @@ If you discover any security related issues, please email contact@hassankhan.me 
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/hassankhan/laranav.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/larabros/laranav.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/hassankhan/laranav/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/hassankhan/laranav.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/hassankhan/laranav.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/hassankhan/laranav.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/larabros/laranav/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/larabros/laranav.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/larabros/laranav.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/larabros/laranav.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/hassankhan/laranav
-[link-travis]: https://travis-ci.org/hassankhan/laranav
-[link-scrutinizer]: https://scrutinizer-ci.com/g/hassankhan/laranav/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/hassankhan/laranav
-[link-downloads]: https://packagist.org/packages/hassankhan/laranav
+[link-packagist]: https://packagist.org/packages/larabros/laranav
+[link-travis]: https://travis-ci.org/larabros/laranav
+[link-scrutinizer]: https://scrutinizer-ci.com/g/larabros/laranav/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/larabros/laranav
+[link-downloads]: https://packagist.org/packages/larabros/laranav
 [link-author]: https://github.com/hassankhan
 [link-contributors]: ../../contributors

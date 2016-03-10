@@ -1,6 +1,6 @@
 <?php
 
-namespace Laranav\Facades;
+namespace Larabros\Laranav\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

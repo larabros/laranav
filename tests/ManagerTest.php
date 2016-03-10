@@ -1,10 +1,10 @@
 <?php
 
-namespace Laranav\Menus\Tests;
+namespace Larabros\Laranav\Menus\Tests;
 
-use Laranav\Manager;
+use Larabros\Laranav\Manager;
 use Illuminate\Support\Collection;
-use Laranav\Tests\TestCase;
+use Larabros\Laranav\Tests\TestCase;
 use \Mockery as m;
 
 class ManagerTest extends TestCase
@@ -97,31 +97,31 @@ class ManagerTest extends TestCase
     }
 
     /**
-     * @covers Laranav\Manager::menu()
-     * @covers Laranav\Manager::getDefaultDriver()
-     * @covers Laranav\Manager::driver()
-     * @covers Laranav\Manager::createDriver()
-     * @covers Laranav\Manager::getConfig()
-     * @covers Laranav\Manager::getMenuItems()
+     * @covers Larabros\Laranav\Manager::menu()
+     * @covers Larabros\Laranav\Manager::getDefaultDriver()
+     * @covers Larabros\Laranav\Manager::driver()
+     * @covers Larabros\Laranav\Manager::createDriver()
+     * @covers Larabros\Laranav\Manager::getConfig()
+     * @covers Larabros\Laranav\Manager::getMenuItems()
      */
     public function testMenu()
     {
-        $this->assertInstanceOf('Laranav\Menus\Menu', $this->manager->menu());
+        $this->assertInstanceOf('Larabros\Laranav\Menus\Menu', $this->manager->menu());
         $this->assertCount(3, $this->manager->menu()->getItems());
     }
 
     /**
-     * @covers Laranav\Manager::menu()
-     * @covers Laranav\Manager::getDefaultDriver()
-     * @covers Laranav\Manager::driver()
-     * @covers Laranav\Manager::createDriver()
-     * @covers Laranav\Manager::getConfig()
-     * @covers Laranav\Manager::getMenuItems()
+     * @covers Larabros\Laranav\Manager::menu()
+     * @covers Larabros\Laranav\Manager::getDefaultDriver()
+     * @covers Larabros\Laranav\Manager::driver()
+     * @covers Larabros\Laranav\Manager::createDriver()
+     * @covers Larabros\Laranav\Manager::getConfig()
+     * @covers Larabros\Laranav\Manager::getMenuItems()
      */
     public function testDefaultMenuAndSecondaryMenu()
     {
-        $this->assertInstanceOf('Laranav\Menus\Menu', $this->manager->menu());
-        $this->assertInstanceOf('Laranav\Menus\Menu', $this->manager->menu('nav'));
+        $this->assertInstanceOf('Larabros\Laranav\Menus\Menu', $this->manager->menu());
+        $this->assertInstanceOf('Larabros\Laranav\Menus\Menu', $this->manager->menu('nav'));
 
         $this->assertCount(3, $this->manager->menu()->getItems());
         $this->assertCount(2, $this->manager->menu('nav')->getItems());

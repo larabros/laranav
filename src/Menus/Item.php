@@ -1,6 +1,6 @@
 <?php
 
-namespace Laranav\Menus;
+namespace Larabros\Laranav\Menus;
 
 use Illuminate\Support\Collection;
 

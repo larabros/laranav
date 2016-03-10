@@ -1,8 +1,8 @@
 <?php
 
-namespace Laranav;
+namespace Larabros\Laranav;
 
-use Laranav\Menus\Menu;
+use Larabros\Laranav\Menus\Menu;
 use Illuminate\Support\Manager as AbstractManager;
 use Illuminate\Contracts\Foundation\Application;
 

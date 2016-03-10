@@ -1,6 +1,6 @@
 <?php
 
-namespace Laranav;
+namespace Larabros\Laranav;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
