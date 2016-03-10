@@ -1,14 +1,14 @@
 {
-    "name": "hassankhan/laranav",
+    "name": "larabros/laranav",
     "type": "library",
     "description": "An easy-to-use, customisable menu and navigation package for Laravel",
     "keywords": [
-        "hassankhan",
+        "larabros",
         "laranav",
         "laravel",
         "menu"
     ],
-    "homepage": "https://github.com/hassankhan/laranav",
+    "homepage": "https://github.com/larabros/laranav",
     "license": "MIT",
     "authors": [
         {
@@ -33,12 +33,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Laranav\\": "src"
+            "Larabros\\Laranav\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Laranav\\Tests\\": "tests"
+            "Larabros\\Laranav\\Tests\\": "tests"
         }
     },
     "scripts": {

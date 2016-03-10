@@ -1,10 +1,10 @@
 <?php
 
-namespace Laranav\Menus\Tests;
+namespace Larabros\Laranav\Menus\Tests;
 
-use Laranav\Menus\Item;
-use Laranav\Menus\Menu;
-use Laranav\Tests\TestCase;
+use Larabros\Laranav\Menus\Item;
+use Larabros\Laranav\Menus\Menu;
+use Larabros\Laranav\Tests\TestCase;
 use \Mockery as m;
 
 class MenuTest extends TestCase

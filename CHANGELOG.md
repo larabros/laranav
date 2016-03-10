@@ -21,6 +21,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.4.0 - 2016-03-10
+
+### Fixed
+- Changed project namespace to `Larabros`
+
 ## 0.3.2 - 2016-02-22
 
 ### Added

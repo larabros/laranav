@@ -1,6 +1,6 @@
 <?php
 
-namespace Laranav\Menus;
+namespace Larabros\Laranav\Menus;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
