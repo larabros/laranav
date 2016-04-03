@@ -21,6 +21,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
+## 0.4.2 - 2016-04-03
+
+### Fixed
+- Incorrect documentation
+
 ## 0.4.1 - 2016-04-03
 
 ### Added
