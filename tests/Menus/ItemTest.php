@@ -10,8 +10,8 @@ use \Mockery as m;
 class ItemTest extends TestCase
 {
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::getTitle()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::getTitle()
      * @dataProvider itemProvider()
      */
     public function testGetTitle($itemData)
@@ -22,8 +22,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::getUrl()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::getUrl()
      * @dataProvider itemProvider()
      */
     public function testGetUrl($itemData)
@@ -34,8 +34,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::isActive()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::isActive()
      * @dataProvider itemProvider()
      */
     public function testGetIsActive($itemData)
@@ -46,8 +46,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::isActive()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::isActive()
      * @dataProvider itemProvider()
      */
     public function testGetIsInactive($itemData)
@@ -58,9 +58,9 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::hasChildren()
-     * @covers       Laranav\Menus\Item::getChildren()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::hasChildren()
+     * @covers       Larabros\Laranav\Menus\Item::getChildren()
      * @dataProvider itemProvider()
      */
     public function testGetNoChildren($itemData)
@@ -73,9 +73,9 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::hasChildren()
-     * @covers       Laranav\Menus\Item::getChildren()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::hasChildren()
+     * @covers       Larabros\Laranav\Menus\Item::getChildren()
      * @dataProvider nestedItemProvider()
      */
     public function testGetChildren($itemData)
@@ -88,8 +88,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::getClasses()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::getClasses()
      * @dataProvider itemProvider()
      */
     public function testGetClasses($itemData)
@@ -101,8 +101,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::getClasses()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::getClasses()
      * @dataProvider itemProvider()
      */
     public function testGetClassesWhenActive($itemData)
@@ -114,8 +114,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::getClasses()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::getClasses()
      * @dataProvider nestedItemProvider()
      */
     public function testGetClassesWithChildren($itemData)
@@ -127,8 +127,8 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Item::__construct()
-     * @covers       Laranav\Menus\Item::getClasses()
+     * @covers       Larabros\Laranav\Menus\Item::__construct()
+     * @covers       Larabros\Laranav\Menus\Item::getClasses()
      * @dataProvider nestedItemProvider()
      */
     public function testGetClassesWhenActiveWithChildren($itemData)

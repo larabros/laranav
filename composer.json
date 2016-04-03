@@ -1,12 +1,9 @@
 {
     "name": "larabros/laranav",
-    "type": "library",
-    "description": "An easy-to-use, customisable menu and navigation package for Laravel",
+    "description": "An easy-to-use, customisable menu and navigation package, for Laravel 5.1+",
     "keywords": [
         "larabros",
-        "laranav",
-        "laravel",
-        "menu"
+        "laranav"
     ],
     "homepage": "https://github.com/larabros/laranav",
     "license": "MIT",
@@ -19,17 +16,16 @@
         }
     ],
     "require": {
-        "php" : "~5.5|~7.0",
-        "anahkiasen/html-object": "~1.4",
-        "illuminate/contracts": "~5.1",
-        "illuminate/http": "~5.1",
-        "illuminate/support": "~5.1"
+        "php": "^5.5.9 || ^7.0",
+        "illuminate/support": "^5.1",
+        "illuminate/contracts": "^5.1",
+        "illuminate/http": "^5.1"
     },
     "require-dev": {
-        "phpunit/phpunit" : "4.*",
+        "phpunit/phpunit": "^4.8 || ^5.0",
         "scrutinizer/ocular": "~1.1",
         "squizlabs/php_codesniffer": "~2.3",
-        "mockery/mockery": "0.9.*"
+        "mockery/mockery": "^0.9.4"
     },
     "autoload": {
         "psr-4": {
@@ -42,9 +38,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
-        "sniff": "phpcs",
-        "fix": "phpcbf"
+        "test": "phpunit"
     },
     "extra": {
         "branch-alias": {

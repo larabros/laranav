@@ -46,8 +46,8 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Menu::__construct()
-     * @covers       Laranav\Menus\Menu::getName()
+     * @covers       Larabros\Laranav\Menus\Menu::__construct()
+     * @covers       Larabros\Laranav\Menus\Menu::getName()
      * @dataProvider menuProvider()
      */
     public function testGetName($items)
@@ -57,15 +57,15 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Menu::__construct()
-     * @covers       Laranav\Menus\Menu::addItems()
-     * @covers       Laranav\Menus\Menu::createItems()
-     * @covers       Laranav\Menus\Menu::createItem()
-     * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::hasNestedItems()
-     * @covers       Laranav\Menus\Menu::generateItemUrl()
-     * @covers       Laranav\Menus\Menu::isUrlActive()
-     * @covers       Laranav\Menus\Menu::getItems()
+     * @covers       Larabros\Laranav\Menus\Menu::__construct()
+     * @covers       Larabros\Laranav\Menus\Menu::addItems()
+     * @covers       Larabros\Laranav\Menus\Menu::createItems()
+     * @covers       Larabros\Laranav\Menus\Menu::createItem()
+     * @covers       Larabros\Laranav\Menus\Menu::isItemArray()
+     * @covers       Larabros\Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Larabros\Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Larabros\Laranav\Menus\Menu::isUrlActive()
+     * @covers       Larabros\Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
      */
     public function testAddItems($items)
@@ -79,14 +79,14 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Menu::__construct()
-     * @covers       Laranav\Menus\Menu::addItem()
-     * @covers       Laranav\Menus\Menu::createItem()
-     * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::hasNestedItems()
-     * @covers       Laranav\Menus\Menu::generateItemUrl()
-     * @covers       Laranav\Menus\Menu::isUrlActive()
-     * @covers       Laranav\Menus\Menu::getItems()
+     * @covers       Larabros\Laranav\Menus\Menu::__construct()
+     * @covers       Larabros\Laranav\Menus\Menu::addItem()
+     * @covers       Larabros\Laranav\Menus\Menu::createItem()
+     * @covers       Larabros\Laranav\Menus\Menu::isItemArray()
+     * @covers       Larabros\Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Larabros\Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Larabros\Laranav\Menus\Menu::isUrlActive()
+     * @covers       Larabros\Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
      */
     public function testAddItem($items)
@@ -103,15 +103,15 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Menu::__construct()
-     * @covers       Laranav\Menus\Menu::addItems()
-     * @covers       Laranav\Menus\Menu::createItems()
-     * @covers       Laranav\Menus\Menu::createItem()
-     * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::hasNestedItems()
-     * @covers       Laranav\Menus\Menu::generateItemUrl()
-     * @covers       Laranav\Menus\Menu::isUrlActive()
-     * @covers       Laranav\Menus\Menu::getItems()
+     * @covers       Larabros\Laranav\Menus\Menu::__construct()
+     * @covers       Larabros\Laranav\Menus\Menu::addItems()
+     * @covers       Larabros\Laranav\Menus\Menu::createItems()
+     * @covers       Larabros\Laranav\Menus\Menu::createItem()
+     * @covers       Larabros\Laranav\Menus\Menu::isItemArray()
+     * @covers       Larabros\Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Larabros\Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Larabros\Laranav\Menus\Menu::isUrlActive()
+     * @covers       Larabros\Laranav\Menus\Menu::getItems()
      * @dataProvider nestedMenuProvider()
      */
     public function testAddNestedItems($items)
@@ -127,15 +127,15 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Menu::__construct()
-     * @covers       Laranav\Menus\Menu::addItems()
-     * @covers       Laranav\Menus\Menu::createItems()
-     * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::hasNestedItems()
-     * @covers       Laranav\Menus\Menu::generateItemUrl()
-     * @covers       Laranav\Menus\Menu::isUrlActive()
-     * @covers       Laranav\Menus\Menu::toHtml()
-     * @covers       Laranav\Menus\Menu::getItems()
+     * @covers       Larabros\Laranav\Menus\Menu::__construct()
+     * @covers       Larabros\Laranav\Menus\Menu::addItems()
+     * @covers       Larabros\Laranav\Menus\Menu::createItems()
+     * @covers       Larabros\Laranav\Menus\Menu::isItemArray()
+     * @covers       Larabros\Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Larabros\Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Larabros\Laranav\Menus\Menu::isUrlActive()
+     * @covers       Larabros\Laranav\Menus\Menu::toHtml()
+     * @covers       Larabros\Laranav\Menus\Menu::getItems()
      * @dataProvider menuProvider()
      */
     public function testToHtml($items)
@@ -152,15 +152,15 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @covers       Laranav\Menus\Menu::__construct()
-     * @covers       Laranav\Menus\Menu::addItems()
-     * @covers       Laranav\Menus\Menu::createItems()
-     * @covers       Laranav\Menus\Menu::isItemArray()
-     * @covers       Laranav\Menus\Menu::hasNestedItems()
-     * @covers       Laranav\Menus\Menu::generateItemUrl()
-     * @covers       Laranav\Menus\Menu::isUrlActive()
-     * @covers       Laranav\Menus\Menu::toHtml()
-     * @covers       Laranav\Menus\Menu::getItems()
+     * @covers       Larabros\Laranav\Menus\Menu::__construct()
+     * @covers       Larabros\Laranav\Menus\Menu::addItems()
+     * @covers       Larabros\Laranav\Menus\Menu::createItems()
+     * @covers       Larabros\Laranav\Menus\Menu::isItemArray()
+     * @covers       Larabros\Laranav\Menus\Menu::hasNestedItems()
+     * @covers       Larabros\Laranav\Menus\Menu::generateItemUrl()
+     * @covers       Larabros\Laranav\Menus\Menu::isUrlActive()
+     * @covers       Larabros\Laranav\Menus\Menu::toHtml()
+     * @covers       Larabros\Laranav\Menus\Menu::getItems()
      * @dataProvider nestedMenuProvider()
      */
     public function testToHtmlWithNestedItems($items)
